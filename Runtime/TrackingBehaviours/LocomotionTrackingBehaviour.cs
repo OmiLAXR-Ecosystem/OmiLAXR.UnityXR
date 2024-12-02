@@ -1,7 +1,7 @@
 ﻿using OmiLAXR.TrackingBehaviours;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 
-namespace OmiLAXR.Modules.YOUR_MODULE_NAME
+namespace OmiLAXR.UnityXR.TrackingBehaviours
 {
     public class LocomotionTrackingBehaviour : TrackingBehaviour<LocomotionMediator>
     {

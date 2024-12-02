@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
 using Object = UnityEngine.Object;
 
-namespace OmiLAXR.Modules.YOUR_MODULE_NAME
+namespace OmiLAXR.UnityXR.TrackingBehaviours
 {
     public class TeleportationProviderTrackingBehaviour : TrackingBehaviour<TeleportationProvider>
     {
