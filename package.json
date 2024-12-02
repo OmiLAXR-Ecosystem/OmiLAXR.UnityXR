@@ -1,0 +1,32 @@
+{
+  "name": "com.rwth.unity.omilaxr.unityxr",
+  "version": "1.0.0",
+  "displayName": "OmiLAXR.UnityXR",
+  "description": "An OmiLAXR module for UnityXR interactions.",
+  "unity": "2021.3",
+  "unityRelease": "15f1",
+  "documentationUrl": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr/-/wikis",
+  "changelogUrl": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr/-/blob/main/CHANGELOG",
+  "licensesUrl": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr/-/blob/main/LICENSE",
+  "homepage": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr",
+  "dependencies": {
+    "com.rwth.unity.omilaxr": "2.0.11",
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
+    "com.unity.inputsystem": "1.11.2",
+    "com.unity.xr.core-utils": "2.3.0",
+    "com.unity.xr.interaction.toolkit": "3.0.7"
+  },
+  "keywords": [
+    "OmiLAXR",
+    "OmiLAXR Module",
+    "Learning Analytics",
+    "Virtual Reality",
+    "Augmented Reality",
+    "eXtended Reality"
+  ],
+  "author": {
+    "name": "Sergej Görzen",
+    "email": "goerzen@cs.rwth-aachen.de",
+    "url": "https://elearn.rwth-aachen.de/goerzen"
+  }
+}
