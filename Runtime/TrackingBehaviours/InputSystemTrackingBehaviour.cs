@@ -1,0 +1,45 @@
+﻿using System.ComponentModel;
+using OmiLAXR.TrackingBehaviours;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+
+namespace OmiLAXR.UnityXR.TrackingBehaviours
+{
+    [AddComponentMenu("OmiLAXR / 3) Tracking Behaviours / Input System Tracking Behaviour (UnityXR)"), 
+     Description("Tracks XR device inputs by using <InputSystem> instance.")]
+    public class InputSystemTrackingBehaviour : EventTrackingBehaviour
+    {
+        public struct InputTrackingBehaviourArgs
+        {
+            public int DeviceId;
+            public string DeviceName;
+            public string ButtonName;
+        }
+        
+        public TrackingBehaviourEvent<InputTrackingBehaviourArgs> OnPressedAnyButton = new TrackingBehaviourEvent<InputTrackingBehaviourArgs>();
+        
+        private void Update()
+        {
+            // Check all devices
+            foreach (var device in InputSystem.devices)
+            {
+                // Check all controls on the device
+                foreach (var control in device.allControls)
+                {
+                    // If it's a button control and is pressed
+                    if (control is not ButtonControl button || !button.wasPressedThisFrame) 
+                        continue;
+                    // Fire the event
+                    Debug.Log($"Button Pressed: {control.name} on Device: {device.displayName}");
+                    OnPressedAnyButton?.Invoke(this, new InputTrackingBehaviourArgs()
+                    {
+                        ButtonName = control.name,
+                        DeviceId = device.deviceId,
+                        DeviceName = device.displayName
+                    });
+                }
+            }
+        }
+    }
+}

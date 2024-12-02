@@ -12,7 +12,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
      Description("Tracks teleportation events of <TeleportationProvider>, <TeleportationArea> and <TeleportationAnchor> components.")]
     public class TeleportationTrackingBehaviour : TrackingBehaviour
     {
-        public TrackingBehaviourEvent OnTeleported;
+        public TrackingBehaviourEvent<TeleportingEventArgs, TeleportingEventArgs> OnTeleported;
 
         private void LocomotionStarted(LocomotionProvider sender)
         {
@@ -60,10 +60,13 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             var tis = Select<BaseTeleportationInteractable>(objects);
             foreach (var ti in tis)
             {
-                
                 ti.teleporting.AddListener(e =>
                 {
                     
+                });
+                OnTeleported.Bind(ti.teleporting, (t) =>
+                {
+                    Debug.Log($"Teleporting: {t} -> {t.teleportRequest.destinationPosition}, Request Time: {t.teleportRequest.requestTime}");
                 });
             }
         }

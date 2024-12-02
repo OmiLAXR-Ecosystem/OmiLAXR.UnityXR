@@ -1,9 +1,12 @@
-﻿using OmiLAXR.TrackingBehaviours;
+﻿using System.ComponentModel;
+using OmiLAXR.TrackingBehaviours;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace OmiLAXR.UnityXR.TrackingBehaviours
 {
+    [AddComponentMenu("OmiLAXR / 3) Tracking Behaviours / XRBaseInteractable Tracking Behaviour (UnityXR)"), 
+     Description("Tracks XR controllers by using <XRBaseInteractable> components.")]
     public class XRBaseInteractableTrackingBehaviour : TrackingBehaviour<XRBaseInteractable>
     {
         protected override void AfterFilteredObjects(XRBaseInteractable[] interactables)

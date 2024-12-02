@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.XR;
 
 namespace OmiLAXR.UnityXR.TrackingBehaviours
 {
-    [AddComponentMenu("OmiLAXR / 3) Tracking Behaviours / XR Controllers Tracking Behaviour (UnityXR)"), 
+    [AddComponentMenu("OmiLAXR / 3) Tracking Behaviours / Tracked Pose Driver Tracking Behaviour (UnityXR)"), 
      Description("Tracks XR controllers by using <TrackedPoseDriver> components.")]
     public class TrackedPoseDriverTrackingBehaviour : TrackingBehaviour<TrackedPoseDriver>
     {
