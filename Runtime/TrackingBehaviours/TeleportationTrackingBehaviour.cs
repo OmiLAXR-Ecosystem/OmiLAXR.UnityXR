@@ -57,16 +57,16 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             var cameraYOffset = xrOrigin.CameraYOffset;
             var floorOffset = xrOrigin.CameraFloorOffsetObject;
             var gazeDirection = c.transform.forward.normalized;
-            Debug.Log("Position " + c.transform.position);
-            Debug.Log("CameraYOffset " + cameraYOffset);
-            Debug.Log("FloorOffset " + floorOffset.transform.position);
-            Debug.Log("GazeDirection " + gazeDirection);
+            // Debug.Log("Position " + c.transform.position);
+            // Debug.Log("CameraYOffset " + cameraYOffset);
+            // Debug.Log("FloorOffset " + floorOffset.transform.position);
+            // Debug.Log("GazeDirection " + gazeDirection);
 
             var floorPosition = xrOrigin.CurrentTrackingOriginMode == TrackingOriginModeFlags.Device
                 ? c.transform.position - Vector3.up * cameraYOffset
                 : c.transform.position;
 
-            Debug.Log("FloorPosition " + floorPosition);
+            // Debug.Log("FloorPosition " + floorPosition);
             
             return new TeleportationPlayerState()
             {
@@ -95,7 +95,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
         {
             if (!_teleportingXrOrigin)
                 return;
-            Debug.Log($"Teleporting: {args} -> {args.teleportRequest.destinationPosition}, Request Time: {args.teleportRequest.requestTime}");
+            // Debug.Log($"Teleporting: {args} -> {args.teleportRequest.destinationPosition}, Request Time: {args.teleportRequest.requestTime}");
             _destinationPosition = args.teleportRequest.destinationPosition;
             _requestTime = args.teleportRequest.requestTime;
             _target = (BaseTeleportationInteractable)args.interactableObject;        
