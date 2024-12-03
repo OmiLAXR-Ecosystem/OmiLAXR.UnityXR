@@ -27,13 +27,13 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
 
         private void SelectEnter(SelectEnterEventArgs e)
         {
-            Debug.Log("selectEntered");
+            // Debug.Log("selectEntered");
             OnGrabbed.Invoke(this, e);
         }
 
         private void SelectExit(SelectExitEventArgs e)
         {
-            Debug.Log("selectExited");
+            // Debug.Log("selectExited");
             OnInteracted.Invoke(this, e);
         }
         protected override void AfterFilteredObjects(XRBaseInteractable[] interactables)
@@ -50,12 +50,12 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                 });
                 interactable.hoverEntered.AddListener(_hoverEnterAction = e =>
                 {
-                    Debug.Log("hoverEntered");
+                    // Debug.Log("hoverEntered");
 
                 });
                 interactable.hoverExited.AddListener(_hoverExitAction = e =>
                 {
-                    Debug.Log("hoverExited");
+                    // Debug.Log("hoverExited");
                 });
                 interactable.firstSelectEntered.AddListener(e =>
                 {

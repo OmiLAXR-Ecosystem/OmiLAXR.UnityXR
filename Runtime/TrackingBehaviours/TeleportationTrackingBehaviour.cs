@@ -47,7 +47,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
 
         private void LocomotionEnded(LocomotionProvider sender)
         {
-            Debug.Log("=====Ended Locomotion=====");
+            // Debug.Log("=====Ended Locomotion=====");
             _isTriggeredEndFramesCatch = 0;
         }
 
