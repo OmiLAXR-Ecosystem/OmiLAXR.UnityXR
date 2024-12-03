@@ -17,7 +17,8 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             public string ButtonName;
         }
         
-        public TrackingBehaviourEvent<InputTrackingBehaviourArgs> OnPressedAnyButton = new TrackingBehaviourEvent<InputTrackingBehaviourArgs>();
+        [Gesture("XRController"), Action("Press")]
+        public readonly TrackingBehaviourEvent<InputTrackingBehaviourArgs> OnPressedAnyButton = new TrackingBehaviourEvent<InputTrackingBehaviourArgs>();
         
         private void Update()
         {
@@ -31,7 +32,6 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                     if (control is not ButtonControl button || !button.wasPressedThisFrame) 
                         continue;
                     // Fire the event
-                    Debug.Log($"Button Pressed: {control.name} on Device: {device.displayName}");
                     OnPressedAnyButton?.Invoke(this, new InputTrackingBehaviourArgs()
                     {
                         ButtonName = control.name,
