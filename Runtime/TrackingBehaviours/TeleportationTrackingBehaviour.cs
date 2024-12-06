@@ -114,6 +114,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             var tis = Select<BaseTeleportationInteractable>(objects);
             foreach (var ti in tis)
             {
+                
                 ti.teleporting.RemoveListener(OnRequestTeleportation);
             }
             OnTeleported.Dispose();
