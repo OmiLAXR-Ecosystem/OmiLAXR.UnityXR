@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using OmiLAXR.TrackingBehaviours;
+using PlasticPipe.PlasticProtocol.Messages;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR;
@@ -33,7 +34,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
         // as end teleportation throws same end position like start position, we are detecting change on our own
         private TeleportationPlayerState _beginState;
         
-        private XROrigin _teleportingXrOrigin;
+        private XROrigin _xrOrigin;
         private Vector3 _destinationPosition;
         private Vector3 _destinationRotation;
         private float _requestTime;
@@ -57,16 +58,10 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             var cameraYOffset = xrOrigin.CameraYOffset;
             var floorOffset = xrOrigin.CameraFloorOffsetObject;
             var gazeDirection = c.transform.forward.normalized;
-            // Debug.Log("Position " + c.transform.position);
-            // Debug.Log("CameraYOffset " + cameraYOffset);
-            // Debug.Log("FloorOffset " + floorOffset.transform.position);
-            // Debug.Log("GazeDirection " + gazeDirection);
 
             var floorPosition = xrOrigin.CurrentTrackingOriginMode == TrackingOriginModeFlags.Device
                 ? c.transform.position - Vector3.up * cameraYOffset
                 : c.transform.position;
-
-            // Debug.Log("FloorPosition " + floorPosition);
             
             return new TeleportationPlayerState()
             {
@@ -78,10 +73,11 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
         protected override void AfterFilteredObjects(Object[] objects)
         {
             var tp = First<TeleportationProvider>(objects);
+            _xrOrigin = First<XROrigin>(objects);
+            
             if (tp)
             {
                 tp.locomotionEnded += LocomotionEnded;
-                _teleportingXrOrigin = tp.mediator.xrOrigin;
             }
             
             var tis = Select<BaseTeleportationInteractable>(objects);
@@ -93,13 +89,11 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
 
         private void OnRequestTeleportation(TeleportingEventArgs args)
         {
-            if (!_teleportingXrOrigin)
-                return;
             // Debug.Log($"Teleporting: {args} -> {args.teleportRequest.destinationPosition}, Request Time: {args.teleportRequest.requestTime}");
             _destinationPosition = args.teleportRequest.destinationPosition;
             _requestTime = args.teleportRequest.requestTime;
             _target = (BaseTeleportationInteractable)args.interactableObject;        
-            _beginState = GetPlayerState(_teleportingXrOrigin);
+            _beginState = GetPlayerState(_xrOrigin);
         }
 
         protected override void Dispose(Object[] objects)
@@ -129,16 +123,18 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                 _isTriggeredEndFramesCatch++;
                 return;
             }
+
             OnTeleported?.Invoke(this, new TeleportationArgs()
             {
                 StartState = _beginState,
-                EndState = GetPlayerState(_teleportingXrOrigin),
+                EndState = GetPlayerState(_xrOrigin),
                 Target = _target,
                 DestinationPosition = _destinationPosition,
                 DestinationRotation = _destinationRotation,
                 RequestTime = _requestTime,
-                CameraYOffset = _teleportingXrOrigin.CameraYOffset
+                CameraYOffset = _xrOrigin.CameraYOffset
             });
+            
             _isTriggeredEndFramesCatch = -1;
         }
     }
