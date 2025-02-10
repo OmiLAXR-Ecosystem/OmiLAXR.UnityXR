@@ -1,6 +1,6 @@
 {
   "name": "com.rwth.unity.omilaxr.unityxr",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "displayName": "OmiLAXR.UnityXR",
   "description": "An OmiLAXR module for UnityXR interactions.",
   "unity": "2021.3",

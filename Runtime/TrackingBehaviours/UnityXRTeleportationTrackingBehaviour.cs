@@ -1,39 +1,17 @@
 ﻿using System.ComponentModel;
 using OmiLAXR.TrackingBehaviours;
-using PlasticPipe.PlasticProtocol.Messages;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
-using Object = UnityEngine.Object;
 
 namespace OmiLAXR.UnityXR.TrackingBehaviours
 {
     [AddComponentMenu("OmiLAXR / 3) Tracking Behaviours / Teleportation Tracking Behaviour (UnityXR)"), 
      Description("Tracks teleportation events of <TeleportationProvider>, <TeleportationArea> and <TeleportationAnchor> components.")]
-    public class TeleportationTrackingBehaviour : TrackingBehaviour
-    {
-        public struct TeleportationPlayerState
-        {
-            public Vector3 FloorPosition;
-            public Vector3 CameraGazeDirection;
-        }
-
-        public struct TeleportationArgs
-        {
-            public float CameraYOffset;
-            public TeleportationPlayerState StartState;
-            public TeleportationPlayerState EndState;
-            public BaseTeleportationInteractable Target;
-            public Vector3 DestinationPosition;
-            public Vector3 DestinationRotation;
-            public float RequestTime;
-        }
-
-        // as end teleportation throws same end position like start position, we are detecting change on our own
-        private TeleportationPlayerState _beginState;
-        
+    public class UnityXRTeleportationTrackingBehaviour : TeleportationTrackingBehaviour
+    { 
         private XROrigin _xrOrigin;
         private Vector3 _destinationPosition;
         private Vector3 _destinationRotation;
@@ -42,16 +20,15 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
         private BaseTeleportationInteractable _target;
         private int _isTriggeredEndFramesCatch = -1;
         
-        [Gesture("XRController"), Action("Teleport")]
-        public readonly TrackingBehaviourEvent<TeleportationArgs> OnTeleported 
-            = new TrackingBehaviourEvent<TeleportationArgs>();
+        private TeleportationPlayerState _beginState;
 
+     
         private void LocomotionEnded(LocomotionProvider sender)
         {
             // Debug.Log("=====Ended Locomotion=====");
             _isTriggeredEndFramesCatch = 0;
         }
-
+        
         private TeleportationPlayerState GetPlayerState(XROrigin xrOrigin)
         {
             var c = xrOrigin.Camera;
@@ -69,7 +46,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                 CameraGazeDirection = gazeDirection,
             };
         }
-
+        
         protected override void AfterFilteredObjects(Object[] objects)
         {
             var tp = First<TeleportationProvider>(objects);
@@ -86,7 +63,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                 ti.teleporting.AddListener(OnRequestTeleportation);
             }
         }
-
+        
         private void OnRequestTeleportation(TeleportingEventArgs args)
         {
             // Debug.Log($"Teleporting: {args} -> {args.teleportRequest.destinationPosition}, Request Time: {args.teleportRequest.requestTime}");
@@ -95,7 +72,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             _target = (BaseTeleportationInteractable)args.interactableObject;        
             _beginState = GetPlayerState(_xrOrigin);
         }
-
+        
         protected override void Dispose(Object[] objects)
         {
             base.Dispose(objects);
@@ -113,7 +90,6 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             }
             OnTeleported.Dispose();
         }
-
         private void Update()
         {
             if (_isTriggeredEndFramesCatch < 0)
@@ -124,11 +100,23 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                 return;
             }
 
+            var targetType = TeleportationTargetType.Floor;
+
+            if (_target is TeleportationArea)
+            {
+                targetType = TeleportationTargetType.Area;
+            }
+            else if (_target is TeleportationAnchor)
+            {
+                targetType = TeleportationTargetType.Anchor;
+            }
+            
             OnTeleported?.Invoke(this, new TeleportationArgs()
             {
                 StartState = _beginState,
                 EndState = GetPlayerState(_xrOrigin),
-                Target = _target,
+                Target = _target.transform.gameObject,
+                TargetType = targetType,
                 DestinationPosition = _destinationPosition,
                 DestinationRotation = _destinationRotation,
                 RequestTime = _requestTime,

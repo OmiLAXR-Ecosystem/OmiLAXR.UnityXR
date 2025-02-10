@@ -1,6 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using OmiLAXR.TrackingBehaviours;
+﻿using System.ComponentModel;
+using OmiLAXR.TrackingBehaviours.Learner;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -10,34 +9,27 @@ using Object = UnityEngine.Object;
 namespace OmiLAXR.UnityXR.TrackingBehaviours
 {
     [AddComponentMenu("OmiLAXR / 3) Tracking Behaviours / XRBaseInteractable Tracking Behaviour (UnityXR)"), 
-     Description("Tracks XR controllers by using <XRBaseInteractable> components.")]
-    public class XRBaseInteractableTrackingBehaviour : TrackingBehaviour<XRBaseInteractable>
+     Description("A <InteractableTrackingBehaviour> for tracking XR controllers by using <XRBaseInteractable> components.")]
+    public class XRBaseInteractableTrackingBehaviour : InteractableTrackingBehaviour
     {
-        //[Gesture("XRController"), Action("Hover")]
-        //public TrackingBehaviourEvent<XRBaseInteractable, HoverEnterEvent> OnHover = new TrackingBehaviourEvent<XRBaseInteractable, HoverEnterEvent>();
-        
-        [Gesture("XRController"), Action("Interacted")]
-        public TrackingBehaviourEvent<SelectExitEventArgs> OnInteracted = new TrackingBehaviourEvent<SelectExitEventArgs>();
-
-        [Gesture("XRController"), Action("Grabbed")]
-        public TrackingBehaviourEvent<SelectEnterEventArgs> OnGrabbed = new TrackingBehaviourEvent<SelectEnterEventArgs>();
-        
         private UnityAction<HoverEnterEventArgs> _hoverEnterAction;
         private UnityAction<HoverExitEventArgs> _hoverExitAction;
 
         private void SelectEnter(SelectEnterEventArgs e)
         {
             // Debug.Log("selectEntered");
-            OnGrabbed.Invoke(this, e);
+            OnGrabbed.Invoke(this, new InteractableEventArgs(e.interactableObject.transform.gameObject));
         }
 
         private void SelectExit(SelectExitEventArgs e)
         {
             Debug.Log("selectExited");
-            OnInteracted.Invoke(this, e);
+            OnInteracted.Invoke(this, new InteractableEventArgs(e.interactableObject.transform.gameObject));
         }
-        protected override void AfterFilteredObjects(XRBaseInteractable[] interactables)
+
+        protected override void AfterFilteredObjects(Object[] objects)
         {
+            var interactables = Select<XRBaseInteractable>(objects);
             foreach (var interactable in interactables)
             {
                 interactable.firstHoverEntered.AddListener(e =>
@@ -51,11 +43,12 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                 interactable.hoverEntered.AddListener(_hoverEnterAction = e =>
                 {
                     Debug.Log("hoverEntered");
-
+                    OnTouched.Invoke(this, new InteractableEventArgs(e.interactableObject.transform.gameObject));
                 });
                 interactable.hoverExited.AddListener(_hoverExitAction = e =>
                 {
                     Debug.Log("hoverExited");
+                    OnReleased.Invoke(this, new InteractableEventArgs(e.interactableObject.transform.gameObject));
                 });
                 interactable.firstSelectEntered.AddListener(e =>
                 {
