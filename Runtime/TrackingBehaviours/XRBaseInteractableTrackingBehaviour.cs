@@ -3,7 +3,9 @@ using OmiLAXR.TrackingBehaviours.Learner;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
+#if UNITY_2021_3_OR_NEWER
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+#endif
 using Object = UnityEngine.Object;
 
 namespace OmiLAXR.UnityXR.TrackingBehaviours
@@ -57,7 +59,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                 });
                 interactable.selectEntered.AddListener(SelectEnter);
                 interactable.selectExited.AddListener(SelectExit);
-                interactable.firstFocusEntered.AddListener(e =>
+                /*interactable.firstFocusEntered.AddListener(e =>
                 {
                     // Debug.Log("firstFocusEntered");
                 });
@@ -72,7 +74,7 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
                 interactable.focusExited.AddListener(e =>
                 {
                     // Debug.Log("focusExited");
-                });
+                });*/
                 interactable.activated.AddListener(e =>
                 {
                     // Debug.Log("activated");

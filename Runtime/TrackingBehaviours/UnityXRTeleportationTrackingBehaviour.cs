@@ -3,8 +3,13 @@ using OmiLAXR.TrackingBehaviours;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR;
+#if UNITY_2021_3_OR_NEWER
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
+#else
+using UnityEngine.XR.Interaction.Toolkit;
+#endif
+
 
 namespace OmiLAXR.UnityXR.TrackingBehaviours
 {
@@ -23,7 +28,11 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
         private TeleportationPlayerState _beginState;
 
      
-        private void LocomotionEnded(LocomotionProvider sender)
+#if UNITY_2021_3_OR_NEWER
+         private void LocomotionEnded(LocomotionProvider sender)
+#else
+        private void LocomotionEnded(LocomotionSystem sender)
+#endif
         {
             // Debug.Log("=====Ended Locomotion=====");
             _isTriggeredEndFramesCatch = 0;
@@ -54,7 +63,12 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             
             if (tp)
             {
+#if UNITY_2021_3_OR_NEWER
                 tp.locomotionEnded += LocomotionEnded;
+#else
+                tp.endLocomotion += LocomotionEnded;
+#endif
+
             }
             
             var tis = Select<BaseTeleportationInteractable>(objects);
@@ -80,7 +94,11 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             // Clear events
             foreach (var tp in tps)
             {
-                tp.locomotionEnded -= LocomotionEnded;
+#if UNITY_2021_3_OR_NEWER
+                tp.locomotionEnded += LocomotionEnded;
+#else
+                tp.endLocomotion += LocomotionEnded;
+#endif
             }
             var tis = Select<BaseTeleportationInteractable>(objects);
             foreach (var ti in tis)

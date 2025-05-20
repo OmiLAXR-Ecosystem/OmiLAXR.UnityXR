@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel;
 using OmiLAXR.Listeners;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+#if UNITY_2021_3_OR_NEWER
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
+#endif
 
 namespace OmiLAXR.UnityXR.Listeners
 {
