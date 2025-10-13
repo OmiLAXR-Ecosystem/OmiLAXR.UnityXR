@@ -1,6 +1,6 @@
 {
   "name": "com.rwth.unity.omilaxr.unityxr",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "displayName": "OmiLAXR.UnityXR",
   "description": "An OmiLAXR module for UnityXR interactions.",
   "unity": "2021.3",
@@ -10,7 +10,7 @@
   "licensesUrl": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr/-/blob/main/LICENSE",
   "homepage": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr",
   "dependencies": {
-    "com.rwth.unity.omilaxr": "2.0.11",
+    "com.rwth.unity.omilaxr": "2.2.0",
     "com.unity.inputsystem": "1.0.0",
     "com.unity.xr.core-utils": "2.0.0",
     "com.unity.xr.interaction.toolkit": "2.3.0"
