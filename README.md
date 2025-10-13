@@ -22,17 +22,17 @@ The adapter has following third-party dependencies: -
    "name": "npmjs",
    "url": "http://registry.npmjs.com/",
    "scopes": [
-   "com.rwth.unity.omilaxr.unityxr"
+   "com.rwth.unity.omilaxr"
    ]
    }]`.
-4. By the way, you can also add here this package by adding `"com.rwth.unity.omilaxr.unityxr": "1.0.0"` to the dependencies (attention you can change the version).
+4. By the way, you can also add here this package by adding `"com.rwth.unity.omilaxr.unityxr": "1.1.0"` to the dependencies (attention you can change the version).
 
 
 ## Install by using Git url
 1. Go to Package Manager.
 2. Click on the (+) button.
 3. Select 'Add package from git URL'.
-4. Paste `https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr.git` and confirm.
+4. Paste `https://github.com/SGoerzen/OmiLAXR.UnityXR.git` and confirm.
 
 ## For Developers
 
