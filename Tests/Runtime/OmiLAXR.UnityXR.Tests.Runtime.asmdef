@@ -1,0 +1,25 @@
+{
+    "name": "OmiLAXR.UnityXR.Tests.Runtime",
+    "rootNamespace": "OmiLAXR.UnityXR.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "OmiLAXR",
+        "OmiLAXR.UnityXR",
+        "Unity.XR.Interaction.Toolkit",
+        "Unity.XR.CoreUtils"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
