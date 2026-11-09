@@ -25,7 +25,7 @@ The adapter has following third-party dependencies: -
    "com.rwth.unity.omilaxr"
    ]
    }]`.
-4. By the way, you can also add here this package by adding `"com.rwth.unity.omilaxr.unityxr": "1.1.0"` to the dependencies (attention you can change the version).
+4. By the way, you can also add here this package by adding `"com.rwth.unity.omilaxr.unityxr": "1.1.1"` to the dependencies (attention you can change the version).
 
 
 ## Install by using Git url
