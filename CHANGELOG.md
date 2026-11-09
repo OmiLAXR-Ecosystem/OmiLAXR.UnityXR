@@ -4,9 +4,11 @@
 
 ### Changed
 - Updated package version metadata.
-- XML summaries for `GazeInteractorListener` and `GazeInteractorTrackingBehaviour`. They appear on docs.omilaxr.dev; the latter states that it does not raise `OnHoverEnter` yet.
+- XML summaries for `GazeInteractorListener` and `GazeInteractorTrackingBehaviour`. They appear on docs.omilaxr.dev.
+- `GazeInteractorListener` and `GazeInteractorTrackingBehaviour` are in the Add Component menu (`OmiLAXR / 1) Listeners` and `OmiLAXR / 3) Tracking Behaviours`).
 
 ### Fixed
+- `GazeInteractorTrackingBehaviour` raises `OnHoverEnter` when an `XRGazeInteractor` starts hovering an interactable. Before, the event was never raised (and was null), so the behaviour produced no data. The new `OnHoverExit` is raised when the hover ends; both are tagged `[Gesture("Gaze")]` with the actions `Enter` and `Leave`. Disposing unsubscribes from the interactors.
 - `UnityXRTeleportationTrackingBehaviour` now unsubscribes from `locomotionEnded`/`endLocomotion` on dispose instead of subscribing a second time.
 
 ## [1.1.0] - 2025-10-13

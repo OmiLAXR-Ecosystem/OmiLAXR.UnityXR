@@ -3,7 +3,9 @@
 * Copyright (C) 2025 Sergej Görzen <sergej.goerzen@gmail.com>
 * This file is part of OmiLAXR.UnityXR.
 */
+using System.ComponentModel;
 using OmiLAXR.Listeners;
+using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 #if UNITY_2021_3_OR_NEWER
@@ -13,8 +15,11 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 namespace OmiLAXR.UnityXR.Listeners
 {
     /// <summary>
-    /// Finds every XR Interaction Toolkit <c>XRGazeInteractor</c> in the scene and hands them to the pipeline.
+    /// Finds every XR Interaction Toolkit <c>XRGazeInteractor</c> in the scene and hands them to the pipeline
+    /// for <see cref="TrackingBehaviours.GazeInteractorTrackingBehaviour"/>.
     /// </summary>
+    [AddComponentMenu("OmiLAXR / 1) Listeners / <XRGazeInteractor> Objects Listener (UnityXR)"),
+     Description("Provides all <XRGazeInteractor> components to pipeline.")]
     public class GazeInteractorListener : AutoListener<XRGazeInteractor>
     {
         
