@@ -9,6 +9,10 @@
   "changelogUrl": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr/-/blob/main/CHANGELOG",
   "licensesUrl": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr/-/blob/main/LICENSE",
   "homepage": "https://gitlab.com/learntech-rwth/omilaxr-ecosystem/v2/xr-framework-modules/omilaxr.unityxr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OmiLAXR-Ecosystem/OmiLAXR.UnityXR"
+  },
   "dependencies": {
     "com.rwth.unity.omilaxr": "2.2.0",
     "com.unity.inputsystem": "1.0.0",
