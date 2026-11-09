@@ -8,6 +8,7 @@ using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 namespace OmiLAXR.UnityXR.Tests
 {
@@ -16,6 +17,12 @@ namespace OmiLAXR.UnityXR.Tests
         public class TestableInteractableTrackingBehaviour : XRBaseInteractableTrackingBehaviour
         {
             public void Feed(params Object[] objects) => AfterFilteredObjects(objects);
+            public void DisposeObjects(params Object[] objects) => Dispose(objects);
+        }
+
+        public class TestableGazeInteractorTrackingBehaviour : GazeInteractorTrackingBehaviour
+        {
+            public void Feed(params XRGazeInteractor[] interactors) => AfterFilteredObjects(interactors);
             public void DisposeObjects(params Object[] objects) => Dispose(objects);
         }
 
@@ -93,6 +100,53 @@ namespace OmiLAXR.UnityXR.Tests
             first.hoverEntered.Invoke(new HoverEnterEventArgs { interactableObject = first });
             second.hoverEntered.Invoke(new HoverEnterEventArgs { interactableObject = second });
             first.selectEntered.Invoke(new SelectEnterEventArgs { interactableObject = first });
+
+            // Assert
+            CollectionAssert.IsEmpty(calls);
+        }
+
+        private XRGazeInteractor CreateGazeInteractor(string name)
+        {
+            var go = new GameObject(name);
+            _created.Add(go);
+            return go.AddComponent<XRGazeInteractor>();
+        }
+
+        [Test]
+        public void GazeInteractorTrackingBehaviour_Forwards_Hover_Events()
+        {
+            // Arrange
+            var calls = new List<string>();
+            var tb = _pipelineObject.AddComponent<TestableGazeInteractorTrackingBehaviour>();
+            tb.OnHoverEnter.AddHandler((_, e) => calls.Add("enter:" + e.interactableObject.transform.name));
+            tb.OnHoverExit.AddHandler((_, e) => calls.Add("exit:" + e.interactableObject.transform.name));
+            var interactor = CreateGazeInteractor("Gaze");
+            var interactable = CreateInteractable("Cube");
+            tb.Feed(interactor);
+
+            // Act
+            interactor.hoverEntered.Invoke(new HoverEnterEventArgs { interactorObject = interactor, interactableObject = interactable });
+            interactor.hoverExited.Invoke(new HoverExitEventArgs { interactorObject = interactor, interactableObject = interactable });
+
+            // Assert
+            CollectionAssert.AreEqual(new[] { "enter:Cube", "exit:Cube" }, calls);
+        }
+
+        [Test]
+        public void GazeInteractorTrackingBehaviour_Dispose_Unsubscribes_From_Interactors()
+        {
+            // Arrange
+            var calls = new List<string>();
+            var tb = _pipelineObject.AddComponent<TestableGazeInteractorTrackingBehaviour>();
+            var interactor = CreateGazeInteractor("Gaze");
+            var interactable = CreateInteractable("Cube");
+            tb.Feed(interactor);
+            tb.DisposeObjects(interactor);
+            // Dispose also unbinds the event handlers, so add one again to see whether the interactor still forwards.
+            tb.OnHoverEnter.AddHandler((_, e) => calls.Add("enter"));
+
+            // Act
+            interactor.hoverEntered.Invoke(new HoverEnterEventArgs { interactorObject = interactor, interactableObject = interactable });
 
             // Assert
             CollectionAssert.IsEmpty(calls);
