@@ -101,9 +101,9 @@ namespace OmiLAXR.UnityXR.TrackingBehaviours
             foreach (var tp in tps)
             {
 #if UNITY_2021_3_OR_NEWER
-                tp.locomotionEnded += LocomotionEnded;
+                tp.locomotionEnded -= LocomotionEnded;
 #else
-                tp.endLocomotion += LocomotionEnded;
+                tp.endLocomotion -= LocomotionEnded;
 #endif
             }
             var tis = Select<BaseTeleportationInteractable>(objects);
