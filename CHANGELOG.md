@@ -4,6 +4,7 @@
 
 ### Changed
 - Updated package version metadata.
+- XML summaries for `GazeInteractorListener` and `GazeInteractorTrackingBehaviour`. They appear on docs.omilaxr.dev; the latter states that it does not raise `OnHoverEnter` yet.
 
 ### Fixed
 - `UnityXRTeleportationTrackingBehaviour` now unsubscribes from `locomotionEnded`/`endLocomotion` on dispose instead of subscribing a second time.

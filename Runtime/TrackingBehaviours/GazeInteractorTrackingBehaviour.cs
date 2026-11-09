@@ -13,6 +13,10 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 namespace OmiLAXR.UnityXR.TrackingBehaviours
 {
+    /// <summary>
+    /// Subscribes to the hover events of XR Interaction Toolkit <c>XRGazeInteractor</c>s.
+    /// Not finished yet: <c>OnHoverEnter</c> is not raised, so this behaviour produces no data.
+    /// </summary>
     public class GazeInteractorTrackingBehaviour : TrackingBehaviour<XRGazeInteractor>
     {
         public TrackingBehaviourEvent<HoverEnterEventArgs> OnHoverEnter;

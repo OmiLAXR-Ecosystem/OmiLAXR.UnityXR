@@ -12,6 +12,9 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 namespace OmiLAXR.UnityXR.Listeners
 {
+    /// <summary>
+    /// Finds every XR Interaction Toolkit <c>XRGazeInteractor</c> in the scene and hands them to the pipeline.
+    /// </summary>
     public class GazeInteractorListener : AutoListener<XRGazeInteractor>
     {
         
